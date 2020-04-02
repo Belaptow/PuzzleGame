@@ -1,8 +1,36 @@
+#controls {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: 1px solid red
+}
+
+.control-button {
+    height: 40px;
+    width: 100px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#imagegrid {
+    width: 640px;
+    height: 360px;
+    border: 1px solid black;
+}
+
+#chunks {
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
 .ball {
     height: 40px;
     width: 40px;
     background-color: blue;
     border-radius: 50%;
 }
+
 
 /*# sourceMappingURL=style.css.map*/
