@@ -4,6 +4,23 @@ import { Dashboard } from "./components/Dashboard.jsx";
 
 ReactDOM.render(<Dashboard />, document.getElementById('dashboard'));
 
+var visualGrid = document.getElementById("visual-grid")
+var balls = []
+var imagesSrcArr = []
+
+document.getElementById("vertical-slider").oninput = (e) => {
+    document.getElementById("vertical-span").innerHTML = e.target.value
+}
+
+document.getElementById("horizontal-slider").oninput = (e) => {
+    document.getElementById("horizontal-span").innerHTML = e.target.value
+}
+
+document.getElementById("separate-to-chunks").onclick = (e) => {
+    console.log("Генерация чанков")
+    generateChunks()
+};
+
 //Получение случайного числа между min(влючая) и max(не включая)
 function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
@@ -23,8 +40,6 @@ function httpGet(theUrl) {
     xmlHttp.send(null);
     return xmlHttp.responseText;
 }
-
-var imagesSrcArr = []
 
 //Обработка загрузки изображений
 document.getElementById("load-images-button").onclick = (e) => {
@@ -83,36 +98,40 @@ function moveAt(e) {
     e.target.style.top = e.pageY - e.target.offsetHeight / 2 + "px";
 }
 
-let balls = [];
-for (let i = 0; i < 20; i++) {
-    var ball = document.createElement("div");
-    ball.innerText = i;
-    ball.classList.add("ball");
-    ball.id = i;
-    document.getElementById("chunks").appendChild(ball);
-    ball.onmousedown = function (e) {
-        // 1. отследить нажатие
-        console.log(e.target.id)
-        // подготовить к перемещению
-        // 2. разместить на том же месте, но в абсолютных координатах
-        e.target.style.position = "absolute";
-        moveAt(e);
-        // переместим в body, чтобы мяч был точно не внутри position:relative
-        document.body.appendChild(e.target);
-
-        e.target.style.zIndex = 1000; // показывать мяч над другими элементами
-
-        // 3, перемещать по экрану
-        document.onmousemove = function (e) {
+function generateChunks() {
+    if (balls.length != 0) return
+    balls = []
+    for (let i = 0; i < 20; i++) {
+        var ball = document.createElement("div");
+        ball.innerText = i;
+        ball.classList.add("ball");
+        ball.id = i;
+        document.getElementById("chunks").appendChild(ball);
+        ball.onmousedown = function (e) {
+            // 1. отследить нажатие
+            console.log(e.target.id)
+            // подготовить к перемещению
+            // 2. разместить на том же месте, но в абсолютных координатах
+            e.target.style.position = "absolute";
             moveAt(e);
-        };
+            // переместим в body, чтобы мяч был точно не внутри position:relative
+            document.body.appendChild(e.target);
 
-        // 4. отследить окончание переноса
-        e.target.onmouseup = function () {
-            document.onmousemove = null;
-            e.target.onmouseup = null;
-            e.target.style.zIndex = 0;
+            e.target.style.zIndex = 1000; // показывать мяч над другими элементами
+
+            // 3, перемещать по экрану
+            document.onmousemove = function (e) {
+                moveAt(e);
+            };
+
+            // 4. отследить окончание переноса
+            e.target.onmouseup = function () {
+                document.onmousemove = null;
+                e.target.onmouseup = null;
+                e.target.style.zIndex = 0;
+            };
         };
-    };
-    balls.push(ball);
+        balls.push(ball);
+    }
 }
+

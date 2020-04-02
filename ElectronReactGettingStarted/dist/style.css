@@ -5,6 +5,14 @@
     border: 1px solid red
 }
 
+.slider {
+    width: 300px;
+}
+
+#visual-grid {
+    display: grid;
+}
+
 .control-button {
     height: 40px;
     width: 100px;
