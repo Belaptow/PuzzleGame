@@ -199,8 +199,43 @@ function checkIfInGrid(e) {
     let targetX = targetRect.top + targetRect.height / 2
     let targetY = targetRect.left + targetRect.width / 2
 
+    let isOverGrid = (targetX > minX && targetX < maxX && targetY > minY && targetY < maxY)
+
+    if (!isOverGrid) return false
+
+    let elementsCollection = document.getElementById("visual-grid").children
+
+    for (let i = 0; i < elementsCollection.length; i++) {
+
+        let cellRect = elementsCollection[i].getBoundingClientRect()
+
+        let minX = cellRect.top
+        let minY = cellRect.left
+        let maxX = minX + cellRect.height
+        let maxY = minY + cellRect.width
+
+        let isOverCell = (targetX > minX && targetX < maxX && targetY > minY && targetY < maxY)
+        console.log("isOverCell: " + isOverCell)
+        if (isOverCell) {
+            console.log("over " + elementsCollection[i].id)
+
+            if (elementsCollection[i].childElementCount > 0) {
+                console.log("cell occupied")
+                break;
+            }
+
+            e.target.style.left = 0
+            e.target.style.top = 0
+            e.target.style.position = "relative"
+
+            elementsCollection[i].appendChild(e.target)
+            break;
+        }
+    }
+
     //return (targetRect.top > minX && targetRect.top < maxX && targetRect.left > minY && targetRect.left < maxY)
-    return (targetX > minX && targetX < maxX && targetY > minY && targetY < maxY)
+    //return (targetX > minX && targetX < maxX && targetY > minY && targetY < maxY)
+    return isOverGrid
 }
 
 //Генерация частей изображения
