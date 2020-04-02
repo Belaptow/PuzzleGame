@@ -8,6 +8,7 @@ var horizontalCount = document.getElementById("horizontal-slider").value
 var verticalCount = document.getElementById("vertical-slider").value
 var chunks = []
 var imagesSrcArr = []
+var currentSrc = ""
 
 //Установка положения грида поверх изображения
 function setGridPos() {
@@ -57,7 +58,6 @@ document.getElementById("horizontal-slider").oninput = (e) => {
 
 //Разбить изборажение на чанки
 document.getElementById("separate-to-chunks").onclick = (e) => {
-    console.log("Генерация чанков")
     generateChunks()
 };
 
@@ -112,17 +112,31 @@ function setRandomSrc() {
     chunks = []
 
     let randomInt = randomInteger(0, imagesSrcArr.length)
-    console.log(randomInt)
 
     let randomSrc = imagesSrcArr[randomInt]
-    console.log(randomSrc)
 
     document.getElementById("imagegrid").setAttribute("src", randomSrc)
+
+    //setVisualGridSize()
+    setTimeout(setVisualGridSize, 500);
+
+    currentSrc = randomSrc;
+}
+
+//Установка размеров грида в соответствии с размером img
+function setVisualGridSize() {
+    if (document.getElementById("imagegrid").height == 0 || document.getElementById("imagegrid").width == 0 || !document.getElementById("imagegrid").width || !document.getElementById("imagegrid").height) {
+        console.log("h or w = 0 or null")
+        setTimeout(setVisualGridSize, 1000);
+        return
+    }
+    document.getElementById("visual-grid").style.height = document.getElementById("imagegrid").height + "px"
+    document.getElementById("visual-grid").style.width = document.getElementById("imagegrid").width + "px"
+    setGridPos()
 }
 
 //обработка выбора случайного изображения
 document.getElementById("random-image-button").onclick = (e) => {
-    console.log("random clicked")
     if (imagesSrcArr.length == 0) return
     setRandomSrc()
 }
@@ -136,6 +150,7 @@ function moveAt(e) {
 
 //очистка сгенерированных чанков
 function clearGeneratedChunks() {
+    document.getElementById("imagegrid").style.visibility = "visible"
     chunks.forEach((element) => {
         document.getElementById(element.id).remove()
     })
@@ -144,6 +159,8 @@ function clearGeneratedChunks() {
 
 //Генерация частей изображения
 function generateChunks() {
+    if (currentSrc == "") return
+
     clearGeneratedChunks()
 
     chunks = []
@@ -153,38 +170,56 @@ function generateChunks() {
     let chunkWidth = document.getElementById("imagegrid").width / horizontalCount
     let chunkHeight = document.getElementById("imagegrid").height / verticalCount
 
+    document.getElementById("imagegrid").style.visibility = "hidden"
+
+    let horizontalPos = 0
+    let verticalPos = 0
+
     for (let i = 0; i < chunksCount; i++) {
-        var chunk = document.createElement("div");
+        var chunk = document.createElement("div")
+
         chunk.style.height = chunkHeight + "px"
         chunk.style.width = chunkWidth + "px"
-        chunk.innerText = i;
-        chunk.classList.add("chunk");
-        chunk.id = "chunk-" + i;
-        document.getElementById("chunks").appendChild(chunk);
+
+        chunk.innerText = i
+        chunk.id = "chunk-" + i
+
+        chunk.classList.add("chunk")
+
+        chunk.style.background = "transparent url(" + currentSrc + ") -" + (chunkWidth * horizontalPos) + "px -" + (chunkHeight * verticalPos) + "px no-repeat"
+
+        horizontalPos++
+        if (horizontalPos == horizontalCount) {
+            horizontalPos = 0
+            verticalPos++
+        }
+
+        document.getElementById("chunks").appendChild(chunk)
+
         chunk.onmousedown = function (e) {
             // 1. отследить нажатие
             console.log(e.target.id)
             // подготовить к перемещению
             // 2. разместить на том же месте, но в абсолютных координатах
-            e.target.style.position = "absolute";
-            moveAt(e);
+            e.target.style.position = "absolute"
+            moveAt(e)
             // переместим в body, чтобы мяч был точно не внутри position:relative
-            document.body.appendChild(e.target);
+            document.body.appendChild(e.target)
 
-            e.target.style.zIndex = 1000; // показывать мяч над другими элементами
+            e.target.style.zIndex = 1000 // показывать мяч над другими элементами
 
             // 3, перемещать по экрану
             document.onmousemove = function (e) {
-                moveAt(e);
+                moveAt(e)
             };
 
             // 4. отследить окончание переноса
             e.target.onmouseup = function () {
-                document.onmousemove = null;
-                e.target.onmouseup = null;
-                e.target.style.zIndex = 0;
-            };
-        };
+                document.onmousemove = null
+                e.target.onmouseup = null
+                e.target.style.zIndex = 0
+            }
+        }
         chunks.push(chunk);
     }
 }

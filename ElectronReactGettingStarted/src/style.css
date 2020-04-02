@@ -13,8 +13,6 @@
     display: grid;
     position: absolute;
     border: 2px solid green;
-    width: 640px;
-    height: 360px;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
 }
@@ -27,8 +25,6 @@
 }
 
 #imagegrid {
-    width: 640px;
-    height: 360px;
     border: 1px solid black;
 }
 
@@ -42,11 +38,10 @@
 .chunk {
     height: 40px;
     width: 40px;
-    background-color: blue;
 }
 
 .grid-item {
-    border: 0.2px solid black;
+    border: 0.2px solid red;
     height: 100%;
     width: 100%;
 }
