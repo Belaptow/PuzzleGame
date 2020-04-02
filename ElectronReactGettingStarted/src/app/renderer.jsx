@@ -12,6 +12,8 @@ var currentSrc = ""
 var isDragging = false
 var currentDraggingId = ""
 
+
+
 //Установка положения грида поверх изображения
 function setGridPos() {
     let imgClientRect = document.getElementById("imagegrid").getBoundingClientRect()
@@ -21,21 +23,45 @@ function setGridPos() {
 
 setGridPos()
 
+function onMouseEnterGridItem(e) {
+    //if (!isDragging) return
+    e.target.style.border = "2px groove blue"
+}
+
+function onMouseOutGridItem(e) {
+    e.target.style.border = "0.2px solid black"
+}
+
 //заполнение грида сеткой
 function populateGrid() {
-    let innerHTMLstring = ""
-    let divLeft = "<div class='grid-item' "
-    let divRight = "></div>"
+
     horizontalCount = document.getElementById("horizontal-slider").value
     verticalCount = document.getElementById("vertical-slider").value
+
     let cellsCount = horizontalCount * verticalCount
+
     document.getElementById("visual-grid").innerHTML = ""
-    for (let i = 0; i < cellsCount; i++) {
-        innerHTMLstring += divLeft + "id='cell-" + i + "'" + divRight
-    }
+
     document.getElementById("visual-grid").style.gridTemplateColumns = "repeat(" + horizontalCount + ", 1fr)"
     document.getElementById("visual-grid").style.gridTemplateRows = "repeat(" + verticalCount + ", 1fr)"
-    document.getElementById("visual-grid").innerHTML = innerHTMLstring
+
+    for (let i = 0; i < cellsCount; i++) {
+        var gridCell = document.createElement("div");
+
+        gridCell.id = "cell-" + i
+
+        gridCell.classList.add("grid-item")
+
+        gridCell.onmouseenter = (e) => {
+            onMouseEnterGridItem(e)
+        }
+
+        gridCell.onmouseleave = (e) => {
+            onMouseOutGridItem(e)
+        }
+
+        document.getElementById("visual-grid").appendChild(gridCell)
+    }
 }
 
 populateGrid()
@@ -146,6 +172,8 @@ document.getElementById("random-image-button").onclick = (e) => {
 // передвинуть мяч под координаты курсора
 // и сдвинуть на половину ширины/высоты для центрирования
 function moveAt(e) {
+    isDragging = true
+    currentDraggingId = e.target.id
     e.target.style.left = e.pageX - e.target.offsetWidth / 2 + "px";
     e.target.style.top = e.pageY - e.target.offsetHeight / 2 + "px";
 }
@@ -157,6 +185,22 @@ function clearGeneratedChunks() {
         document.getElementById(element.id).remove()
     })
     chunks = []
+}
+
+function checkIfInGrid(e) {
+    let targetRect = e.target.getBoundingClientRect()
+    let gridRect = document.getElementById("visual-grid").getBoundingClientRect()
+
+    let minX = gridRect.top
+    let minY = gridRect.left
+    let maxX = minX + gridRect.height
+    let maxY = minY + gridRect.width
+
+    let targetX = targetRect.top + targetRect.height / 2
+    let targetY = targetRect.left + targetRect.width / 2
+
+    //return (targetRect.top > minX && targetRect.top < maxX && targetRect.left > minY && targetRect.left < maxY)
+    return (targetX > minX && targetX < maxX && targetY > minY && targetY < maxY)
 }
 
 //Генерация частей изображения
@@ -176,7 +220,7 @@ function generateChunks() {
 
     let horizontalPos = 0
     let verticalPos = 0
-    console.log(document.getElementById("imagegrid").getBoundingClientRect().top)
+
     for (let i = 0; i < chunksCount; i++) {
         var chunk = document.createElement("div")
 
@@ -220,7 +264,10 @@ function generateChunks() {
             };
 
             // 4. отследить окончание переноса
-            e.target.onmouseup = function () {
+            e.target.onmouseup = function (e) {
+                console.log(checkIfInGrid(e))
+                isDragging = false
+                currentDraggingId = ""
                 document.onmousemove = null
                 e.target.onmouseup = null
                 e.target.style.zIndex = 0
@@ -229,4 +276,6 @@ function generateChunks() {
         chunks.push(chunk);
     }
 }
+
+
 

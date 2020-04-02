@@ -6,7 +6,7 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    border: 1px solid red
+    
 }
 
 .slider {
@@ -16,7 +16,6 @@ body {
 #visual-grid {
     display: grid;
     position: absolute;
-    border: 2px solid green;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
 }
@@ -29,11 +28,11 @@ body {
 }
 
 #imagegrid {
-    border: 1px solid black;
+    
 }
 
 #chunks {
-    border: 1px solid blue;
+    
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -46,7 +45,7 @@ body {
 }
 
 .grid-item {
-    border: 0.2px solid red;
+    border: 0.2px solid black;
     height: 100%;
     width: 100%;
 }
