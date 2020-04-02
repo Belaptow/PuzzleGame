@@ -39,11 +39,10 @@
     flex-wrap: wrap;
 }
 
-.ball {
+.chunk {
     height: 40px;
     width: 40px;
     background-color: blue;
-    border-radius: 50%;
 }
 
 .grid-item {

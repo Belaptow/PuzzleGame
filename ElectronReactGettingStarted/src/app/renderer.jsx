@@ -4,8 +4,9 @@ import { Dashboard } from "./components/Dashboard.jsx";
 
 ReactDOM.render(<Dashboard />, document.getElementById('dashboard'));
 
-var visualGrid = document.getElementById("visual-grid")
-var balls = []
+var horizontalCount = document.getElementById("horizontal-slider").value
+var verticalCount = document.getElementById("vertical-slider").value
+var chunks = []
 var imagesSrcArr = []
 
 //Установка положения грида поверх изображения
@@ -22,8 +23,8 @@ function populateGrid() {
     let innerHTMLstring = ""
     let divLeft = "<div class='grid-item' "
     let divRight = "></div>"
-    let horizontalCount = document.getElementById("horizontal-slider").value
-    let verticalCount = document.getElementById("vertical-slider").value
+    horizontalCount = document.getElementById("horizontal-slider").value
+    verticalCount = document.getElementById("vertical-slider").value
     let cellsCount = horizontalCount * verticalCount
     document.getElementById("visual-grid").innerHTML = ""
     for (let i = 0; i < cellsCount; i++) {
@@ -43,12 +44,14 @@ window.onresize = (e) => {
 //изменение значения слайдера для вертикали
 document.getElementById("vertical-slider").oninput = (e) => {
     document.getElementById("vertical-span").innerHTML = e.target.value
+    clearGeneratedChunks()
     populateGrid()
 }
 
 //изменение значения слайдера для горизонтали
 document.getElementById("horizontal-slider").oninput = (e) => {
     document.getElementById("horizontal-span").innerHTML = e.target.value
+    clearGeneratedChunks()
     populateGrid()
 }
 
@@ -104,6 +107,10 @@ document.getElementById("load-images-button").onclick = (e) => {
 }
 
 function setRandomSrc() {
+    clearGeneratedChunks()
+
+    chunks = []
+
     let randomInt = randomInteger(0, imagesSrcArr.length)
     console.log(randomInt)
 
@@ -127,16 +134,34 @@ function moveAt(e) {
     e.target.style.top = e.pageY - e.target.offsetHeight / 2 + "px";
 }
 
+//очистка сгенерированных чанков
+function clearGeneratedChunks() {
+    chunks.forEach((element) => {
+        document.getElementById(element.id).remove()
+    })
+    chunks = []
+}
+
+//Генерация частей изображения
 function generateChunks() {
-    if (balls.length != 0) return
-    balls = []
-    for (let i = 0; i < 20; i++) {
-        var ball = document.createElement("div");
-        ball.innerText = i;
-        ball.classList.add("ball");
-        ball.id = i;
-        document.getElementById("chunks").appendChild(ball);
-        ball.onmousedown = function (e) {
+    clearGeneratedChunks()
+
+    chunks = []
+
+    let chunksCount = horizontalCount * verticalCount
+
+    let chunkWidth = document.getElementById("imagegrid").width / horizontalCount
+    let chunkHeight = document.getElementById("imagegrid").height / verticalCount
+
+    for (let i = 0; i < chunksCount; i++) {
+        var chunk = document.createElement("div");
+        chunk.style.height = chunkHeight + "px"
+        chunk.style.width = chunkWidth + "px"
+        chunk.innerText = i;
+        chunk.classList.add("chunk");
+        chunk.id = "chunk-" + i;
+        document.getElementById("chunks").appendChild(chunk);
+        chunk.onmousedown = function (e) {
             // 1. отследить нажатие
             console.log(e.target.id)
             // подготовить к перемещению
@@ -160,7 +185,7 @@ function generateChunks() {
                 e.target.style.zIndex = 0;
             };
         };
-        balls.push(ball);
+        chunks.push(chunk);
     }
 }
 
