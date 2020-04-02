@@ -11,6 +11,12 @@
 
 #visual-grid {
     display: grid;
+    position: absolute;
+    border: 2px solid green;
+    width: 640px;
+    height: 360px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
 }
 
 .control-button {
@@ -38,6 +44,12 @@
     width: 40px;
     background-color: blue;
     border-radius: 50%;
+}
+
+.grid-item {
+    border: 0.2px solid black;
+    height: 100%;
+    width: 100%;
 }
 
 

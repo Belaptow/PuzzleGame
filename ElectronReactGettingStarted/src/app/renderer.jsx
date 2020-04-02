@@ -8,23 +8,55 @@ var visualGrid = document.getElementById("visual-grid")
 var balls = []
 var imagesSrcArr = []
 
+//”становка положени€ грида поверх изображени€
+function setGridPos() {
+    let imgClientRect = document.getElementById("imagegrid").getBoundingClientRect()
+    document.getElementById("visual-grid").style.top = imgClientRect.top + "px"
+    document.getElementById("visual-grid").style.left = imgClientRect.left + "px"
+}
+
+setGridPos()
+
+//заполнение грида сеткой
+function populateGrid() {
+    let innerHTMLstring = ""
+    let divLeft = "<div class='grid-item' "
+    let divRight = "></div>"
+    let horizontalCount = document.getElementById("horizontal-slider").value
+    let verticalCount = document.getElementById("vertical-slider").value
+    let cellsCount = horizontalCount * verticalCount
+    document.getElementById("visual-grid").innerHTML = ""
+    for (let i = 0; i < cellsCount; i++) {
+        innerHTMLstring += divLeft + "id='cell-" + i + "'" + divRight
+    }
+    document.getElementById("visual-grid").style.gridTemplateColumns = "repeat(" + horizontalCount + ", 1fr)"
+    document.getElementById("visual-grid").style.gridTemplateRows = "repeat(" + verticalCount + ", 1fr)"
+    document.getElementById("visual-grid").innerHTML = innerHTMLstring
+}
+
+populateGrid()
+
+window.onresize = (e) => {
+    setGridPos()
+}
+
+//изменение значени€ слайдера дл€ вертикали
 document.getElementById("vertical-slider").oninput = (e) => {
     document.getElementById("vertical-span").innerHTML = e.target.value
+    populateGrid()
 }
 
+//изменение значени€ слайдера дл€ горизонтали
 document.getElementById("horizontal-slider").oninput = (e) => {
     document.getElementById("horizontal-span").innerHTML = e.target.value
+    populateGrid()
 }
 
+//–азбить изборажение на чанки
 document.getElementById("separate-to-chunks").onclick = (e) => {
     console.log("√енераци€ чанков")
     generateChunks()
 };
-
-//ѕолучение случайного числа между min(влюча€) и max(не включа€)
-function getRandomArbitrary(min, max) {
-    return Math.random() * (max - min) + min;
-}
 
 //ѕолучение случайного целого числа между min(влюча€) и max(не включа€)
 function randomInteger(min, max) {
@@ -63,13 +95,10 @@ document.getElementById("load-images-button").onclick = (e) => {
 
     searchResDoc.head.innerHTML = headString
     searchResDoc.body.innerHTML = bodyString
-    console.log(searchResDoc)
 
     searchResDoc.querySelectorAll("img.wallpapers__item__img").forEach((img) => {
         imagesSrcArr.push(img.getAttribute("src"))
     })
-
-    console.log(imagesSrcArr)
 
     setRandomSrc()
 }
