@@ -9,6 +9,8 @@ var verticalCount = document.getElementById("vertical-slider").value
 var chunks = []
 var imagesSrcArr = []
 var currentSrc = ""
+var isDragging = false
+var currentDraggingId = ""
 
 //Установка положения грида поверх изображения
 function setGridPos() {
@@ -174,7 +176,7 @@ function generateChunks() {
 
     let horizontalPos = 0
     let verticalPos = 0
-
+    console.log(document.getElementById("imagegrid").getBoundingClientRect().top)
     for (let i = 0; i < chunksCount; i++) {
         var chunk = document.createElement("div")
 
@@ -183,6 +185,10 @@ function generateChunks() {
 
         chunk.innerText = i
         chunk.id = "chunk-" + i
+
+
+        chunk.style.top = randomInteger(document.getElementById("imagegrid").getBoundingClientRect().top, document.body.clientHeight - 10) + "px"
+        chunk.style.left = randomInteger(0, document.body.clientWidth - 10) + "px"
 
         chunk.classList.add("chunk")
 
@@ -194,7 +200,7 @@ function generateChunks() {
             verticalPos++
         }
 
-        document.getElementById("chunks").appendChild(chunk)
+        document.body.appendChild(chunk)
 
         chunk.onmousedown = function (e) {
             // 1. отследить нажатие
