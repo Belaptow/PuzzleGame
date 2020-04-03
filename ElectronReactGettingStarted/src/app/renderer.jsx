@@ -1,6 +1,7 @@
 import * as ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Dashboard } from "./components/Dashboard.jsx";
+import * as Draggabilly from "draggabilly"
 
 //ReactDOM.render(<Dashboard />, document.getElementById('dashboard'));
 
@@ -184,22 +185,31 @@ function clearGeneratedChunks() {
     document.getElementById("tries-count").innerHTML = "Tries: " + triesCount
 }
 
+//TEST FUNCTION DELETE IN PROD
+document.onmousemove = (e) => {
+    document.getElementById("mouse-coor").innerHTML = "X: " + e.pageX + "<br/>Y: " + e.pageY
+}
+
 //Проверка над грид и над ячейкой
 function checkIfInGrid(e) {
     let targetRect = e.target.getBoundingClientRect()
     let gridRect = document.getElementById("visual-grid").getBoundingClientRect()
 
-    let minX = gridRect.top
-    let minY = gridRect.left
-    let maxX = minX + gridRect.height
-    let maxY = minY + gridRect.width
+    let minX = gridRect.left
+    let minY = gridRect.top
+    let maxX = minX + gridRect.width
+    let maxY = minY + gridRect.height
 
-    let targetX = targetRect.top + targetRect.height / 2
-    let targetY = targetRect.left + targetRect.width / 2
+    //console.log("left top X: " + minX + " Y: " + minY + "\nright bottom X: " + maxX + " Y: " + maxY)
 
-    let isOverGrid = (targetX > minX && targetX < maxX && targetY > minY && targetY < maxY)
+    let mouseX = e.pageX
+    let mouseY = e.pageY
 
-    if (!isOverGrid) return false
+    let isMouseOverGrid = (mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY)
+
+    //console.log("isMouseOverGrid? " + isMouseOverGrid)
+
+    if (!isMouseOverGrid) return false
 
     let elementsCollection = document.getElementById("visual-grid").children
 
@@ -207,16 +217,17 @@ function checkIfInGrid(e) {
 
         let cellRect = elementsCollection[i].getBoundingClientRect()
 
-        let minX = cellRect.top
-        let minY = cellRect.left
-        let maxX = minX + cellRect.height
-        let maxY = minY + cellRect.width
+        let minX = cellRect.left
+        let minY = cellRect.top
+        let maxX = minX + cellRect.width
+        let maxY = minY + cellRect.height
 
-        let isOverCell = (targetX > minX && targetX < maxX && targetY > minY && targetY < maxY)
-        if (isOverCell) {
+        let isMouseOverCell = (mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY)
+
+        if (isMouseOverCell) {
 
             if (elementsCollection[i].childElementCount > 0) {
-                break;
+                return false
             }
 
             e.target.style.left = 0
@@ -227,10 +238,7 @@ function checkIfInGrid(e) {
             break;
         }
     }
-
-    //return (targetRect.top > minX && targetRect.top < maxX && targetRect.left > minY && targetRect.left < maxY)
-    //return (targetX > minX && targetX < maxX && targetY > minY && targetY < maxY)
-    return isOverGrid
+    return isMouseOverGrid
 }
 
 //Генерация частей изображения
@@ -256,22 +264,48 @@ function generateChunks() {
     let horizontalPos = 0
     let verticalPos = 0
 
+    let imageGridTop = document.getElementById("imagegrid").getBoundingClientRect().top
+    let bodyClientH = document.body.clientHeight
+
+    //console.log(imageGridTop + " ---- " + bodyClientH)
+
     for (let i = 0; i < chunksCount; i++) {
         var chunk = document.createElement("div")
 
         chunk.style.height = chunkHeight + "px"
         chunk.style.width = chunkWidth + "px"
 
-        //chunk.innerText = i
         chunk.id = "chunk-" + i
-
-
-        chunk.style.top = randomInteger(document.getElementById("imagegrid").getBoundingClientRect().top, document.body.clientHeight - 10) + "px"
-        chunk.style.left = randomInteger(0, document.body.clientWidth - 10) + "px"
 
         chunk.classList.add("chunk")
 
         chunk.style.background = "transparent url(" + currentSrc + ") -" + (chunkWidth * horizontalPos) + "px -" + (chunkHeight * verticalPos) + "px no-repeat"
+
+        //start of draggably
+        let drag = new Draggabilly(chunk, {})
+
+        drag.on("dragStart", (e) => {
+            //console.log(e.target.id)
+            e.target.style.zIndex = 1000;
+            e.target.style.position = "absolute";
+            moveAt(e)
+            document.body.appendChild(e.target)
+        })
+
+        drag.on("dragEnd", (e) => {
+            if (!checkIfInGrid(e)) {
+                e.target.style.position = "absolute";
+                moveAt(e)
+                document.body.appendChild(e.target)
+            }
+            e.target.style.zIndex = 0
+        })
+        //end of draggably
+
+        chunk.style.position = "absolute"
+
+        chunk.style.top = randomInteger(imageGridTop, bodyClientH - 10) + "px"
+        chunk.style.left = randomInteger(0, document.body.clientWidth - 10) + "px"
 
         horizontalPos++
         if (horizontalPos == horizontalCount) {
@@ -281,33 +315,33 @@ function generateChunks() {
 
         document.body.appendChild(chunk)
 
-        chunk.onmousedown = function (e) {
-            // 1. отследить нажатие
-            //console.log(e.target.id)
-            // подготовить к перемещению
-            // 2. разместить на том же месте, но в абсолютных координатах
-            e.target.style.position = "absolute"
-            moveAt(e)
-            // переместим в body, чтобы мяч был точно не внутри position:relative
-            document.body.appendChild(e.target)
+        //chunk.onmousedown = function (e) {
+        //    // 1. отследить нажатие
+        //    //console.log(e.target.id)
+        //    // подготовить к перемещению
+        //    // 2. разместить на том же месте, но в абсолютных координатах
+        //    e.target.style.position = "absolute"
+        //    moveAt(e)
+        //    // переместим в body, чтобы мяч был точно не внутри position:relative
+        //    document.body.appendChild(e.target)
 
-            e.target.style.zIndex = 1000 // показывать мяч над другими элементами
+        //    e.target.style.zIndex = 1000 // показывать мяч над другими элементами
 
-            // 3, перемещать по экрану
-            document.onmousemove = function (e) {
-                moveAt(e)
-            };
+        //    // 3, перемещать по экрану
+        //    document.onmousemove = function (e) {
+        //        moveAt(e)
+        //    };
 
-            // 4. отследить окончание переноса
-            e.target.onmouseup = function (e) {
-                checkIfInGrid(e)
-                isDragging = false
-                currentDraggingId = ""
-                document.onmousemove = null
-                e.target.onmouseup = null
-                e.target.style.zIndex = 0
-            }
-        }
+        //    // 4. отследить окончание переноса
+        //    e.target.onmouseup = function (e) {
+        //        checkIfInGrid(e)
+        //        isDragging = false
+        //        currentDraggingId = ""
+        //        document.onmousemove = null
+        //        e.target.onmouseup = null
+        //        e.target.style.zIndex = 0
+        //    }
+        //}
         chunks.push(chunk);
     }
 }

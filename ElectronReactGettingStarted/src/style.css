@@ -32,8 +32,12 @@ body {
     margin-right: 5px;
 }
 
+#mouse-coor {
+    visibility: hidden;
+}
+
 #imagegrid {
-    
+    margin-top: 10px;
 }
 
 #preview-img {
