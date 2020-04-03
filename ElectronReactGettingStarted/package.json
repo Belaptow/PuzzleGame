@@ -1,9 +1,10 @@
 {
-  "name": "electron-react-getting-started",
+  "name": "puzzle-game",
   "version": "0.0.0",
-  "description": "ElectronReactGettingStarted",
-  "main": "main.js",
+  "description": "Puzzle game",
+  "main": "./dist/main.js",
   "scripts": {
+    "package-win": "electron-packager . puzzle-game --overwrite --platform=win32 --arch=ia32 --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Puzzle Game\"",
     "build:react": "webpack --config webpack.react.config.js",
     "build": "webpack",
     "start": "electron ./dist/main.js"
@@ -23,6 +24,7 @@
     "css-loader": "^3.4.2",
     "draggabilly": "^2.2.0",
     "electron": "^8.2.0",
+    "electron-packager": "^14.2.1",
     "html-webpack-plugin": "^4.0.3",
     "jslint": "^0.12.1",
     "mini-css-extract-plugin": "^0.9.0",

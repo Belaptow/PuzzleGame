@@ -1,0 +1,62 @@
+body {
+    height: 95%;
+    background-color: lightblue;
+}
+
+#controls {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+}
+
+#tries-count {
+    margin-top: 13px;
+}
+
+.slider {
+    width: 300px;
+}
+
+#visual-grid {
+    display: grid;
+    position: absolute;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.control-button {
+    height: 40px;
+    width: 100px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#mouse-coor {
+    visibility: hidden;
+}
+
+#imagegrid {
+    margin-top: 10px;
+}
+
+#preview-img {
+    visibility: hidden;
+    border: 1px ridge dodgerblue;
+}
+
+.chunk {
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    box-shadow: 0 0 10px rgba(0,0,0,0.8);
+}
+
+.grid-item {
+    border: 0.2px solid black;
+    height: 100%;
+    width: 100%;
+}
+
+
+/*# sourceMappingURL=style.css.map*/
