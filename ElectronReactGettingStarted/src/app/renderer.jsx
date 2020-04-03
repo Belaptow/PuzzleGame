@@ -2,7 +2,7 @@ import * as ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Dashboard } from "./components/Dashboard.jsx";
 
-ReactDOM.render(<Dashboard />, document.getElementById('dashboard'));
+//ReactDOM.render(<Dashboard />, document.getElementById('dashboard'));
 
 var horizontalCount = document.getElementById("horizontal-slider").value
 var verticalCount = document.getElementById("vertical-slider").value
@@ -11,6 +11,7 @@ var imagesSrcArr = []
 var currentSrc = ""
 var isDragging = false
 var currentDraggingId = ""
+var triesCount = 0
 
 
 
@@ -23,17 +24,12 @@ function setGridPos() {
 
 setGridPos()
 
-function onMouseEnterGridItem(e) {
-    //if (!isDragging) return
-    e.target.style.border = "2px groove blue"
-}
-
-function onMouseOutGridItem(e) {
-    e.target.style.border = "0.2px solid black"
-}
-
 //заполнение грида сеткой
 function populateGrid() {
+
+    document.getElementById("visual-grid").style.visibility = "visible"
+    document.getElementById("imagegrid").style.border = "0"
+    document.getElementById("preview-img").style.visibility = "hidden"
 
     horizontalCount = document.getElementById("horizontal-slider").value
     verticalCount = document.getElementById("vertical-slider").value
@@ -51,14 +47,6 @@ function populateGrid() {
         gridCell.id = "cell-" + i
 
         gridCell.classList.add("grid-item")
-
-        gridCell.onmouseenter = (e) => {
-            onMouseEnterGridItem(e)
-        }
-
-        gridCell.onmouseleave = (e) => {
-            onMouseOutGridItem(e)
-        }
 
         document.getElementById("visual-grid").appendChild(gridCell)
     }
@@ -111,8 +99,8 @@ document.getElementById("load-images-button").onclick = (e) => {
     let searchAdress = "https://www.goodfon.ru/search/?q="
     let query = document.getElementById("search-bar").value;
 
-    console.log("load clicked")
-    console.log(searchAdress + query)
+    //console.log("load clicked")
+    //console.log(searchAdress + query)
 
     let responseString = httpGet(searchAdress + query);
 
@@ -134,6 +122,7 @@ document.getElementById("load-images-button").onclick = (e) => {
     setRandomSrc()
 }
 
+//выбор случайного элемента
 function setRandomSrc() {
     clearGeneratedChunks()
 
@@ -149,17 +138,23 @@ function setRandomSrc() {
     setTimeout(setVisualGridSize, 500);
 
     currentSrc = randomSrc;
+
+    populateGrid()
 }
 
 //Установка размеров грида в соответствии с размером img
 function setVisualGridSize() {
     if (document.getElementById("imagegrid").height == 0 || document.getElementById("imagegrid").width == 0 || !document.getElementById("imagegrid").width || !document.getElementById("imagegrid").height) {
-        console.log("h or w = 0 or null")
+        //console.log("h or w = 0 or null")
         setTimeout(setVisualGridSize, 1000);
         return
     }
     document.getElementById("visual-grid").style.height = document.getElementById("imagegrid").height + "px"
     document.getElementById("visual-grid").style.width = document.getElementById("imagegrid").width + "px"
+
+    document.getElementById("preview-img").style.height = document.getElementById("imagegrid").height / 3 + "px"
+    document.getElementById("preview-img").style.width = document.getElementById("imagegrid").width / 3 + "px"
+
     setGridPos()
 }
 
@@ -185,8 +180,11 @@ function clearGeneratedChunks() {
         document.getElementById(element.id).remove()
     })
     chunks = []
+    triesCount = 0
+    document.getElementById("tries-count").innerHTML = "Tries: " + triesCount
 }
 
+//Проверка над грид и над ячейкой
 function checkIfInGrid(e) {
     let targetRect = e.target.getBoundingClientRect()
     let gridRect = document.getElementById("visual-grid").getBoundingClientRect()
@@ -215,12 +213,9 @@ function checkIfInGrid(e) {
         let maxY = minY + cellRect.width
 
         let isOverCell = (targetX > minX && targetX < maxX && targetY > minY && targetY < maxY)
-        console.log("isOverCell: " + isOverCell)
         if (isOverCell) {
-            console.log("over " + elementsCollection[i].id)
 
             if (elementsCollection[i].childElementCount > 0) {
-                console.log("cell occupied")
                 break;
             }
 
@@ -244,7 +239,12 @@ function generateChunks() {
 
     clearGeneratedChunks()
 
+    document.getElementById("visual-grid").style.visibility = "visible"
+
     chunks = []
+
+    document.getElementById("preview-img").style.visibility = "visible"
+    document.getElementById("preview-img").setAttribute("src", currentSrc)
 
     let chunksCount = horizontalCount * verticalCount
 
@@ -262,7 +262,7 @@ function generateChunks() {
         chunk.style.height = chunkHeight + "px"
         chunk.style.width = chunkWidth + "px"
 
-        chunk.innerText = i
+        //chunk.innerText = i
         chunk.id = "chunk-" + i
 
 
@@ -283,7 +283,7 @@ function generateChunks() {
 
         chunk.onmousedown = function (e) {
             // 1. отследить нажатие
-            console.log(e.target.id)
+            //console.log(e.target.id)
             // подготовить к перемещению
             // 2. разместить на том же месте, но в абсолютных координатах
             e.target.style.position = "absolute"
@@ -300,7 +300,7 @@ function generateChunks() {
 
             // 4. отследить окончание переноса
             e.target.onmouseup = function (e) {
-                console.log(checkIfInGrid(e))
+                checkIfInGrid(e)
                 isDragging = false
                 currentDraggingId = ""
                 document.onmousemove = null
@@ -312,5 +312,45 @@ function generateChunks() {
     }
 }
 
+document.getElementById("check-if-completed").onclick = (e) => {
+
+    triesCount++
+    document.getElementById("tries-count").innerHTML = "Tries: " + triesCount
+
+    document.getElementById("visual-grid").style.border = "0"
+
+    let elementsCollection = document.getElementById("visual-grid").children
+
+    let isCorrect = true
+
+    for (let i = 0; i < elementsCollection.length; i++) {
+        let element = elementsCollection[i]
+
+        element.style.border = "0.2px solid black"
+
+        if (element.childElementCount < 1) {
+            //console.log(element.id + " is empty")
+            element.style.border = "1px solid red"
+            isCorrect = false
+            continue
+        }
+
+        if (element.firstChild.id.split('-')[1] != element.id.split('-')[1]) {
+            //console.log(element.id + " has incorrect image")
+            element.style.border = "1px solid red"
+            isCorrect = false
+            continue
+        }
+    }
+
+    if (!isCorrect) {
+        return
+    }
+    document.getElementById("visual-grid").style.visibility = "hidden"
+    document.getElementById("imagegrid").style.border = "4px solid green"
+    clearGeneratedChunks()
+    document.getElementById("imagegrid").style.visibility = "visible"
+    document.getElementById("preview-img").style.visibility = "hidden"
+}
 
 

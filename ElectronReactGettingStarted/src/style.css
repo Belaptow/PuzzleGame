@@ -1,5 +1,6 @@
 body {
     height: 95%;
+    background-color: lightblue;
 }
 
 #controls {
@@ -7,6 +8,10 @@ body {
     flex-direction: row;
     flex-wrap: wrap;
     
+}
+
+#tries-count {
+    margin-top: 13px;
 }
 
 .slider {
@@ -31,17 +36,16 @@ body {
     
 }
 
-#chunks {
-    
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+#preview-img {
+    visibility: hidden;
+    border: 1px ridge dodgerblue;
 }
 
 .chunk {
     height: 40px;
     width: 40px;
     position: absolute;
+    box-shadow: 0 0 10px rgba(0,0,0,0.8);
 }
 
 .grid-item {

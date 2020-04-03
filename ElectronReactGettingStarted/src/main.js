@@ -18,7 +18,7 @@ const createWindow = () => {
         })
     );
     console.log("loaded");
-    window.webContents.openDevTools()
+    //window.webContents.openDevTools()
     console.log("devTools opened");
     window.on("closed", () => {
         window = null;
