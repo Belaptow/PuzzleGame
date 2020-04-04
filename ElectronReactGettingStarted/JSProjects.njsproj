@@ -63,6 +63,15 @@
     <Content Include="src\app\components\dataStructuresComponent\datastructPage.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\app\components\gameOfLifeComponent\gameOfLife.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\app\components\gameOfLifeComponent\gameOfLife.jsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\app\components\gameOfLifeComponent\gameOfLifePage.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\app\components\placeholder\placeholder.jsx">
       <SubType>Code</SubType>
     </Content>
@@ -111,6 +120,7 @@
     <Folder Include="src\app\components\" />
     <Folder Include="src\app\components\calcComponent\" />
     <Folder Include="src\app\components\dataStructuresComponent\" />
+    <Folder Include="src\app\components\gameOfLifeComponent\" />
     <Folder Include="src\app\components\timerComponent\" />
     <Folder Include="src\app\components\placeholder\" />
     <Folder Include="src\app\components\splitViewComponent\" />

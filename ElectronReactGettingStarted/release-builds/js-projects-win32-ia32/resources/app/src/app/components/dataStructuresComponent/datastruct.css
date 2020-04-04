@@ -1,0 +1,215 @@
+#root {
+    padding: 40px;
+}
+
+body {
+    background-color: black;
+}
+
+.bodyWrap {
+    width: 100%;
+    height: 100%;
+}
+
+.rootWrap {
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.header {
+    text-align: center;
+}
+
+.info-wrap {
+    background-color: lightgray;
+    color: black;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.stack-component {
+    padding: 10px;
+    text-align: center;
+    border-radius: 15px;
+    background-color: black;
+    color: white;
+    z-index: 0;
+}
+
+.queue-wrapper {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    flex-wrap: nowrap;
+    height: 100px;
+    width: 100%;
+    color: black;
+}
+
+.circ-queue-indicator {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    flex-wrap: nowrap;
+    height: 15px;
+    width: 100%;
+}
+
+.circ-queue-ind-cell {
+    display: table;
+    height: 90%;
+    width: 9%;
+    background-color: black;
+    border-radius: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 1%;
+    color: white;
+    font-size: 15px;
+}
+
+.stack-cell {
+    display: table;
+    height: 90%;
+    width: 9%;
+    background-color: lightblue;
+    border-radius: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 1%;
+    color: black;
+}
+
+    .stack-cell h3 {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .stack-cell h4 {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+.stack-wrapper {
+    display: flex;
+    background-color: black;
+    flex-wrap: nowrap;
+    height: 100px;
+    width: 100%;
+}
+
+.buttons {
+    font-size: 15px;
+    border: none;
+    background-color: lightblue;
+    height: 30px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.display-span {
+    color: white;
+}
+
+.subtree {
+    display: table;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+    .subtree td {
+        text-align: center;
+        padding: 6px;
+    }
+
+.treeNode {
+    background-color: lightblue;
+    border-radius: 50%;
+    height: 1.4em;
+    width: 1.4em;
+    margin-left: 100%;
+    color: black;
+    z-index: 2;
+}
+
+.treeInput {
+    background-color: lightblue;
+    width: 30px;
+    height: 30px;
+    border: none;
+    font-size: 15px;
+    text-align: center;
+}
+
+.treeWrap {
+    text-align: center;
+    color: white;
+}
+
+.tree-controls {
+    background-color: #0d0d0d;
+    border: 3px inset DarkSlateGray;
+    padding: 5px;
+}
+
+.treeOut {
+    background-color: lightblue;
+    width: 30px;
+    height: 30px;
+    border: none;
+    font-size: 15px;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.output-controls {
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 3px;
+    border-spacing: 10px 0px;
+    vertical-align: middle;
+}
+
+.treeOutButtons {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 0px;
+}
+
+.treeButtons {
+    --width: 30px;
+    margin-left: 0px;
+    margin-right: 0px;
+    border: 1px inset lightblue;
+}
+
+.isPresentTree {
+}
+
+.isBalanced {
+    grid-row-start: 4;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.isPresentTree {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.mainCanvas {
+    position: absolute;
+    border: 1px solid red;
+    z-index: 1;
+}

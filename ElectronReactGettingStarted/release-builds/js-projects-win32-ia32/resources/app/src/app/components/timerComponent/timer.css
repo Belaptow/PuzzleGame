@@ -1,0 +1,86 @@
+#root {
+    padding: 40px;
+}
+
+#body {
+    height: 600px;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.wrapper {
+    height: 250px;
+    width: 400px;
+    border: 5px solid darkblue;
+    background-color: lightblue;
+    border-radius: 20px;
+}
+
+.top {
+    height: 40%;
+    padding: 2%;
+    display: flex;
+}
+
+.bot {
+    height: 55%;
+    text-align: center;
+}
+
+.breakContainer {
+    height: 100%;
+    text-align: center;
+    width: 50%;
+}
+
+.sessionContainer {
+    height: 100%;
+    text-align: center;
+    width: 50%;
+}
+
+.buttonsContainer {
+    height: 30%;
+    display: table;
+    margin: 0 auto;
+}
+
+.buttons {
+    background-color: darkblue;
+    border: none;
+    height: 30px;
+    width: 30px;
+    display: table-cell;
+    color: white;
+    font-size: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.buttonsControls {
+    background-color: darkblue;
+    border: none;
+    display: table-cell;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    width: 80px;
+}
+
+.reset {
+    margin-left: 10px;
+}
+
+.timerWrapper {
+    padding: 5px;
+    height: 70%;
+}
+
+.label {
+    font-size: 25px;
+}
+
+.time-left {
+    font-size: 40px;
+}

@@ -38,6 +38,12 @@ const datastructPlugin = new HtmlWebPackPlugin({
     chunks: ["datastruct"]
 })
 
+const gameOfLifePlugin = new HtmlWebPackPlugin({
+    template: "./src/app/components/gameOfLifeComponent/gameOfLifePage.html",
+    filename: "./gameOfLifePage.html",
+    chunks: ["gameOfLife"]
+})
+
 const config = {
     target: "electron-renderer",
     devtool: "source-map",
@@ -47,7 +53,8 @@ const config = {
         placeholder: "./src/app/components/placeholder/placeholder.jsx",
         calculator: "./src/app/components/calcComponent/calculator.jsx",
         timer: "./src/app/components/timerComponent/timer.jsx",
-        datastruct: "./src/app/components/dataStructuresComponent/datastruct.jsx"
+        datastruct: "./src/app/components/dataStructuresComponent/datastruct.jsx",
+        gameOfLife: "./src/app/components/gameOfLifeComponent/gameOfLife.jsx"
     },
     output: {
         filename: "[name].js",
@@ -78,7 +85,8 @@ const config = {
         splitViewPlaceHolderPlugin,
         calcPlugin,
         timerPlugin,
-        datastructPlugin
+        datastructPlugin,
+        gameOfLifePlugin
     ]
 };
 

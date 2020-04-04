@@ -1,0 +1,55 @@
+body {
+    height: 95%;
+    background-color: lightblue;
+}
+
+#wrapper {
+    border: 1px solid black;
+    width: 960px;
+    height: 720px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.grid-cell-dead {
+    width: 100%;
+    height: 100%;
+    border: 1px solid darkslategray;
+    background-color: black; 
+}
+
+.grid-cell-alive {
+    width: 100%;
+    height: 100%;
+    border: 0.1px solid darkslategray;
+    background-color: yellow;
+}
+
+.main-grid {
+    background-color: cornflowerblue;
+}
+
+.main-grid-wrap {
+    height: 100%;
+}
+
+.controls {
+    height: 50px;
+    background-color: black;
+    display: flex;
+    align-items: center;
+}
+
+.control-button {
+    height: 30px;
+    width: 100px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 2px;
+}
+
+.gen-count {
+    color: white;
+    margin-left: 10px;
+    margin-right: 10px;
+}

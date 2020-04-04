@@ -8,6 +8,7 @@ document.getElementById("puzzle-game").onclick = (e) => {
 
 document.getElementById("game-of-life").onclick = (e) => {
     console.log("game-of-life")
+    document.getElementById("contents").setAttribute("src", "./gameOfLifePage.html")
 }
 
 document.getElementById("calculator").onclick = (e) => {

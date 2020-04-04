@@ -1,0 +1,143 @@
+#root {
+    padding: 40px;
+}
+
+#body {
+    height: 600px;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.wrapper {
+    background-color: lightgray;
+    height: 600px;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    text-align: center;
+    padding: 5%;
+}
+
+.buttons {
+    background-color: lightgray;
+    font-size: 40px;
+    border-radius: 30%;
+}
+
+    .buttons:hover {
+        background-color: white;
+    }
+
+.round {
+    border-radius: 50%;
+}
+
+.calc-bottom {
+    height: 70%;
+    background-color: gray;
+    margin-top: 5%;
+    padding: 5%;
+    border-radius: 4%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-areas: "clear divide multiply subtract" "seven eight nine add" "four five six add" "one two three equals" "zero zero decimal equals";
+    gap: 2%;
+}
+
+.calc-top {
+    height: 20%;
+    background-color: gray;
+    border-radius: 15px;
+}
+
+.input {
+    height: 100%;
+}
+
+.form {
+    height: 35%;
+    font-size: 25px;
+    text-align: right;
+    padding: 2%;
+}
+
+.display {
+    height: 45%;
+    padding: 2%;
+    text-align: right;
+    font-size: 35px;
+}
+
+.one {
+    grid-area: one;
+}
+
+.two {
+    grid-area: two;
+}
+
+.three {
+    grid-area: three;
+}
+
+.four {
+    grid-area: four;
+}
+
+.five {
+    grid-area: five;
+}
+
+.six {
+    grid-area: six;
+}
+
+.seven {
+    grid-area: seven;
+}
+
+.eight {
+    grid-area: eight;
+}
+
+.nine {
+    grid-area: nine;
+}
+
+.zero {
+    grid-area: zero;
+}
+
+.equals {
+    grid-area: equals;
+}
+
+.subtract {
+    grid-area: subtract;
+}
+
+.divide {
+    grid-area: divide;
+}
+
+.add {
+    grid-area: add;
+}
+
+.multiply {
+    grid-area: multiply;
+}
+
+.decimal {
+    grid-area: decimal;
+}
+
+.clear {
+    grid-area: clear;
+}
+
+
+/*# sourceMappingURL=calculator.css.map*/
