@@ -5,6 +5,7 @@ require("./gameOfLife.css")
 
 var running = false
 var mouseDown = false;
+var floatOver = false;
 
 function mouseDownGrid(e) {
     mouseDown = true
@@ -13,6 +14,8 @@ function mouseDownGrid(e) {
 
 function mouseUpGrid(e) {
     mouseDown = false
+    floatOver = false
+    document.getElementById("test").innerHTML = floatOver + ""
     console.log("mouse up")
 }
 
@@ -21,10 +24,14 @@ function setClassAlive(e) {
 }
 
 class Cell {
-    constructor(top, left) {
+    constructor(top, left, cellMouseDown, cellMouseEnter) {
         this.top = top
         this.left = left
         this.alive = (Math.random() >= 0.5)
+        this.cellMouseDown = cellMouseDown;
+        this.cellMouseEnter = cellMouseEnter;
+        this.localMouseDown = this.localMouseDown.bind(this)
+        this.localMouseEnter = this.localMouseEnter.bind(this)
         this.setDiv()
     }
 
@@ -37,14 +44,16 @@ class Cell {
 
     localMouseDown(e) {
         console.log("local mouse down")
-        console.log(e)
+        this.alive = true
         setClassAlive(e)
     }
 
     setDiv() {
         this.div = <div className={"grid-cell-" + (this.alive ? "alive" : "dead")}
             id={"cell-" + this.top + "-" + this.left}
-            draggable="false">
+            draggable="false"
+            onMouseDown={this.cellMouseDown}
+            onMouseEnter={this.cellMouseEnter} >
         </div>
     }
 
@@ -71,6 +80,50 @@ class MainGrid extends React.Component {
         this.flattenArray = this.flattenArray.bind(this)
         this.getNewCell = this.getNewCell.bind(this)
         this.componentDidMount = this.componentDidMount.bind(this)
+        this.onCellMouseDown = this.onCellMouseDown.bind(this)
+        this.onCellMouseEnter = this.onCellMouseEnter.bind(this)
+        this.mouseOverGrid = this.mouseOverGrid.bind(this)
+        this.mouseLeaveGrid = this.mouseLeaveGrid.bind(this)
+    }
+
+    onCellMouseDown(e) {
+        let flag = true
+        if (!running) flag = false
+        //running = false
+        //console.log("cell mouse down" + e.target.id)
+        //if (running) return
+        let y = e.target.id.split('-')[1]
+        let x = e.target.id.split('-')[2]
+        //console.log(x + "  " + y)
+        let tempGrid = this.state.currentGrid
+        //console.log(tempGrid[y][x])
+        tempGrid[y][x].alive = true
+        tempGrid[y][x].setDiv()
+        //console.log(tempGrid[y][x])
+        this.setState({
+            currentGrid: tempGrid
+        })
+        //if (flag) this.startStop()
+    }
+
+    onCellMouseEnter(e) {
+        if (!mouseDown) return
+        //if (running) return
+        let flag = true
+        if (!running) flag = false
+        //running = false
+        let y = e.target.id.split('-')[1]
+        let x = e.target.id.split('-')[2]
+        //console.log(x + "  " + y)
+        let tempGrid = this.state.currentGrid
+        //console.log(tempGrid[y][x])
+        tempGrid[y][x].alive = true
+        tempGrid[y][x].setDiv()
+        //console.log(tempGrid[y][x])
+        this.setState({
+            currentGrid: tempGrid
+        })
+        //if (flag) this.startStop()
     }
 
     startStop() {
@@ -87,6 +140,8 @@ class MainGrid extends React.Component {
 
     formNewGrid() {
         //console.log("formNewGrid")
+        if (floatOver) return
+
         let allDead = true
 
         let newGrid = []
@@ -94,8 +149,9 @@ class MainGrid extends React.Component {
         for (let i = 0; i < this.state.heightCount; i++) {
             let tempRow = []
             for (let j = 0; j < this.state.widthCount; j++) {
-                let newCell = new Cell(i, j)
-                newCell.alive = this.state.currentGrid[i][j].alive
+                let newCell = new Cell(i, j, this.onCellMouseDown, this.onCellMouseEnter)
+
+                newCell.alive = this.state.currentGrid[i][j].getDiv().props.className.includes("alive")
 
                 if (newCell.alive) allDead = false
 
@@ -164,6 +220,7 @@ class MainGrid extends React.Component {
             //console.log("x: " + x + " y: " + y + " ngb: " + neighboursCount + " stay alive")
             return cell
         }
+
         cell.alive = false //overpop or starve - die
         //console.log("x: " + x + " y: " + y + " ngb: " + neighboursCount + " over or strv")
         return cell
@@ -176,7 +233,7 @@ class MainGrid extends React.Component {
         for (let i = 0; i < this.state.heightCount; i++) {
             let tempRow = []
             for (let j = 0; j < this.state.widthCount; j++) {
-                tempRow.push(new Cell(i, j))
+                tempRow.push(new Cell(i, j, this.onCellMouseDown, this.onCellMouseEnter))
             }
             startGrid.push(tempRow)
         }
@@ -213,10 +270,28 @@ class MainGrid extends React.Component {
         return flatArr
     }
 
+    mouseOverGrid() {
+        if (mouseDown) floatOver = true
+        else floatOver = false
+        document.getElementById("test").innerHTML = floatOver + ""
+    }
+
+    mouseLeaveGrid() {
+        floatOver = false
+        document.getElementById("test").innerHTML = floatOver + ""
+    }
+
     render() {
         return (
             <div className="main-grid-wrap">
-                <div className="main-grid" style={this.state.gridStyle} id="main-grid" onMouseDown={mouseDownGrid} onMouseUp={mouseUpGrid}>
+                <div className="main-grid" style={this.state.gridStyle}
+                    id="main-grid"
+                    onMouseDown={mouseDownGrid}
+                    onMouseUp={mouseUpGrid}
+                    onMouseOver={this.mouseOverGrid}
+                    onMouseLeave={this.mouseLeaveGrid}
+                    draggable="false">
+
                     {this.flattenArray()}
                 </div>
                 <div className="controls">
