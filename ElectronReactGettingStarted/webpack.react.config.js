@@ -1,6 +1,6 @@
 const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const mainPlugin = new HtmlWebPackPlugin({
     template: "./src/index.html",
@@ -8,11 +8,25 @@ const mainPlugin = new HtmlWebPackPlugin({
     chunks: ["renderer"]
 });
 
+const splitViewPlugin = new HtmlWebPackPlugin({
+    template: "./src/app/components/splitViewComponent/splitViewPage.html",
+    filename: "./splitViewPage.html",
+    chunks: ["splitView"]
+})
+
+const splitViewPlaceHolderPlugin = new HtmlWebPackPlugin({
+    template: "./src/app/components/placeholder/placeholder.html",
+    filename: "./placeholder.html",
+    chunks: ["placeholder"]
+})
+
 const config = {
     target: "electron-renderer",
     devtool: "source-map",
     entry: {
         renderer: "./src/app/renderer.jsx",
+        splitView: "./src/app/components/splitViewComponent/splitView.jsx",
+        placeholder: "./src/app/components/placeholder/placeholder.jsx"
     },
     output: {
         filename: "[name].js",
@@ -26,13 +40,22 @@ const config = {
                 use: {
                     loader: "babel-loader"
                 }
+            },
+            {
+                test: /\.css$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader']
             }
         ]
     },
     resolve: {
         extensions: [".ts", ".tsx", ".js"]
     },
-    plugins: [mainPlugin]
+    plugins: [
+        new MiniCssExtractPlugin({ filename: '[name].css' }),
+        mainPlugin,
+        splitViewPlugin,
+        splitViewPlaceHolderPlugin
+    ]
 };
 
 module.exports = (env, argv) => {

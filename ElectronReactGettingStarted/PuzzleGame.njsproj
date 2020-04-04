@@ -45,7 +45,22 @@
     <Content Include="src\app\components\Dashboard.jsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\app\components\placeholder\placeholder.jsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\app\components\placeholder\placeholder.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\app\components\splitViewComponent\splitViewPage.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\app\renderer.jsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\app\components\splitViewComponent\splitView.jsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\app\components\splitViewComponent\splitView.css">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\index.html">
@@ -54,7 +69,7 @@
     <Content Include="src\main.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\style.css" />
+    <Content Include="src\renderer.css" />
     <Content Include="webpack.config.js">
       <SubType>Code</SubType>
     </Content>
@@ -66,8 +81,8 @@
     <Folder Include="src\" />
     <Folder Include="src\app\" />
     <Folder Include="src\app\components\" />
-    <Folder Include="src\app\renderers\" />
-    <Folder Include="src\app\pages\" />
+    <Folder Include="src\app\components\placeholder\" />
+    <Folder Include="src\app\components\splitViewComponent\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
 </Project>

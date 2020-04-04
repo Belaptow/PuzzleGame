@@ -4,7 +4,6 @@ const path = require("path");
 
 const { app, BrowserWindow } = require('electron');
 
-require('./style.css');
 
 const createWindow = () => {
     console.log("create window");
@@ -12,7 +11,7 @@ const createWindow = () => {
     console.log("window created");
     window.loadURL(
         url.format({
-            pathname: path.join(__dirname, "index.html"),
+            pathname: path.join(__dirname, "splitViewPage.html"),
             protocol: "file:",
             slashes: true
         })

@@ -2,6 +2,7 @@ import * as ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Dashboard } from "./components/Dashboard.jsx";
 import * as Draggabilly from "draggabilly"
+require('../renderer.css');
 
 //ReactDOM.render(<Dashboard />, document.getElementById('dashboard'));
 

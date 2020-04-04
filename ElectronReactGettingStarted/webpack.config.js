@@ -17,11 +17,11 @@ const config = {
                 use: {
                     loader: "babel-loader"
                 }
-            },
-            {
-                test: /\.css$/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader']
             }
+            //{
+            //    test: /\.css$/,
+            //    use: [MiniCssExtractPlugin.loader, 'css-loader']
+            //}
         ]
     },
     resolve: {
@@ -31,7 +31,7 @@ const config = {
         __dirname: false,
         __filename: false
     },
-    plugins: [new MiniCssExtractPlugin({ filename: 'style.css' })]
+    //plugins: [new MiniCssExtractPlugin({ filename: '[name].css' })]
 };
 
 module.exports = (env, argv) => {
