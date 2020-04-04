@@ -20,13 +20,20 @@ const splitViewPlaceHolderPlugin = new HtmlWebPackPlugin({
     chunks: ["placeholder"]
 })
 
+const calcPlugin = new HtmlWebPackPlugin({
+    template: "./src/app/components/calcComponent/calculatorPage.html",
+    filename: "./calculatorPage.html",
+    chunks: ["calculator"]
+})
+
 const config = {
     target: "electron-renderer",
     devtool: "source-map",
     entry: {
         renderer: "./src/app/renderer.jsx",
         splitView: "./src/app/components/splitViewComponent/splitView.jsx",
-        placeholder: "./src/app/components/placeholder/placeholder.jsx"
+        placeholder: "./src/app/components/placeholder/placeholder.jsx",
+        calculator: "./src/app/components/calcComponent/calculator.jsx"
     },
     output: {
         filename: "[name].js",
@@ -54,7 +61,8 @@ const config = {
         new MiniCssExtractPlugin({ filename: '[name].css' }),
         mainPlugin,
         splitViewPlugin,
-        splitViewPlaceHolderPlugin
+        splitViewPlaceHolderPlugin,
+        calcPlugin
     ]
 };
 

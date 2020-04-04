@@ -42,6 +42,15 @@
     </Content>
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="src\app\components\calcComponent\calculator.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\app\components\calcComponent\calculator.jsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\app\components\calcComponent\calculatorPage.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\app\components\Dashboard.jsx">
       <SubType>Code</SubType>
     </Content>
@@ -81,6 +90,7 @@
     <Folder Include="src\" />
     <Folder Include="src\app\" />
     <Folder Include="src\app\components\" />
+    <Folder Include="src\app\components\calcComponent\" />
     <Folder Include="src\app\components\placeholder\" />
     <Folder Include="src\app\components\splitViewComponent\" />
   </ItemGroup>
