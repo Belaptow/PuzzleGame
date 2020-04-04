@@ -26,6 +26,12 @@ const calcPlugin = new HtmlWebPackPlugin({
     chunks: ["calculator"]
 })
 
+const timerPlugin = new HtmlWebPackPlugin({
+    template: "./src/app/components/timerComponent/timerPage.html",
+    filename: "./timerPage.html",
+    chunks: ["timer"]
+})
+
 const config = {
     target: "electron-renderer",
     devtool: "source-map",
@@ -33,7 +39,8 @@ const config = {
         renderer: "./src/app/renderer.jsx",
         splitView: "./src/app/components/splitViewComponent/splitView.jsx",
         placeholder: "./src/app/components/placeholder/placeholder.jsx",
-        calculator: "./src/app/components/calcComponent/calculator.jsx"
+        calculator: "./src/app/components/calcComponent/calculator.jsx",
+        timer: "./src/app/components/timerComponent/timer.jsx"
     },
     output: {
         filename: "[name].js",
@@ -62,7 +69,8 @@ const config = {
         mainPlugin,
         splitViewPlugin,
         splitViewPlaceHolderPlugin,
-        calcPlugin
+        calcPlugin,
+        timerPlugin
     ]
 };
 

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <Name>PuzzleGame</Name>
+    <Name>JSProjects</Name>
     <RootNamespace>ElectronReactGettingStarted</RootNamespace>
     <SaveNodeJsSettingsInProjectFile>True</SaveNodeJsSettingsInProjectFile>
     <NodeExePath>D:\Libraries\Documents\Visual Studio 2019\Projects\ElectronReactGettingStarted\ElectronReactGettingStarted\node_modules\electron\dist\electron.exe</NodeExePath>
@@ -63,6 +63,16 @@
     <Content Include="src\app\components\splitViewComponent\splitViewPage.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\app\components\timerComponent\accurateInterval.js" />
+    <Content Include="src\app\components\timerComponent\timer.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\app\components\timerComponent\timer.jsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\app\components\timerComponent\timerPage.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\app\renderer.jsx">
       <SubType>Code</SubType>
     </Content>
@@ -91,6 +101,7 @@
     <Folder Include="src\app\" />
     <Folder Include="src\app\components\" />
     <Folder Include="src\app\components\calcComponent\" />
+    <Folder Include="src\app\components\timerComponent\" />
     <Folder Include="src\app\components\placeholder\" />
     <Folder Include="src\app\components\splitViewComponent\" />
   </ItemGroup>

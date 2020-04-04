@@ -14,3 +14,8 @@ document.getElementById("calculator").onclick = (e) => {
     console.log("calculator")
     document.getElementById("contents").setAttribute("src", "./calculatorPage.html")
 }
+
+document.getElementById("timer").onclick = (e) => {
+    console.log("timer")
+    document.getElementById("contents").setAttribute("src", "./timerPage.html")
+}

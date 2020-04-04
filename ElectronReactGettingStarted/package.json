@@ -1,10 +1,10 @@
 {
-  "name": "puzzle-game",
+  "name": "js-projects",
   "version": "0.0.0",
-  "description": "Puzzle game",
+  "description": "A series of JS projects",
   "main": "./dist/main.js",
   "scripts": {
-    "package-win": "electron-packager . puzzle-game --overwrite --platform=win32 --arch=ia32 --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Puzzle Game\"",
+    "package-win": "electron-packager . js-projects --overwrite --platform=win32 --arch=ia32 --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"JS Projects\"",
     "build:react": "webpack --config webpack.react.config.js",
     "build": "webpack",
     "start": "electron ./dist/main.js"
