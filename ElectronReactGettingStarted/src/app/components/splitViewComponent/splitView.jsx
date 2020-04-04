@@ -19,3 +19,8 @@ document.getElementById("timer").onclick = (e) => {
     console.log("timer")
     document.getElementById("contents").setAttribute("src", "./timerPage.html")
 }
+
+document.getElementById("data-structures").onclick = (e) => {
+    console.log("data-structures")
+    document.getElementById("contents").setAttribute("src", "./datastructPage.html")
+}

@@ -54,6 +54,15 @@
     <Content Include="src\app\components\Dashboard.jsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\app\components\dataStructuresComponent\datastruct.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\app\components\dataStructuresComponent\datastruct.jsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\app\components\dataStructuresComponent\datastructPage.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\app\components\placeholder\placeholder.jsx">
       <SubType>Code</SubType>
     </Content>
@@ -101,6 +110,7 @@
     <Folder Include="src\app\" />
     <Folder Include="src\app\components\" />
     <Folder Include="src\app\components\calcComponent\" />
+    <Folder Include="src\app\components\dataStructuresComponent\" />
     <Folder Include="src\app\components\timerComponent\" />
     <Folder Include="src\app\components\placeholder\" />
     <Folder Include="src\app\components\splitViewComponent\" />

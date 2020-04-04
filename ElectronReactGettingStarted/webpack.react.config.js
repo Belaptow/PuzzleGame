@@ -32,6 +32,12 @@ const timerPlugin = new HtmlWebPackPlugin({
     chunks: ["timer"]
 })
 
+const datastructPlugin = new HtmlWebPackPlugin({
+    template: "./src/app/components/dataStructuresComponent/datastructPage.html",
+    filename: "./datastructPage.html",
+    chunks: ["datastruct"]
+})
+
 const config = {
     target: "electron-renderer",
     devtool: "source-map",
@@ -40,7 +46,8 @@ const config = {
         splitView: "./src/app/components/splitViewComponent/splitView.jsx",
         placeholder: "./src/app/components/placeholder/placeholder.jsx",
         calculator: "./src/app/components/calcComponent/calculator.jsx",
-        timer: "./src/app/components/timerComponent/timer.jsx"
+        timer: "./src/app/components/timerComponent/timer.jsx",
+        datastruct: "./src/app/components/dataStructuresComponent/datastruct.jsx"
     },
     output: {
         filename: "[name].js",
@@ -70,7 +77,8 @@ const config = {
         splitViewPlugin,
         splitViewPlaceHolderPlugin,
         calcPlugin,
-        timerPlugin
+        timerPlugin,
+        datastructPlugin
     ]
 };
 
