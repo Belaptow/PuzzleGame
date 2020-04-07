@@ -1,0 +1,44 @@
+body {
+    color: white;
+    background-color: black;
+}
+
+#main-canvas {
+    display: block;
+    background-color: black;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid white;
+}
+
+#coor {
+    position: absolute;
+    visibility: hidden;
+    margin: 10px;
+}
+
+.buttons {
+    border: 0;
+    background-color: white;
+    margin: 10px;
+    width: 100px;
+    height: 30px;
+}
+
+.speed-buttons {
+    border: 0;
+    background-color: white;
+    margin: 10px;
+    height: 30px;
+    width: 30px;
+    font-size: 150%;
+}
+
+#controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/*# sourceMappingURL=snake2d.css.map*/

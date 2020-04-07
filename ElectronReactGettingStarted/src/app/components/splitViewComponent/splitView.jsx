@@ -25,3 +25,8 @@ document.getElementById("data-structures").onclick = (e) => {
     console.log("data-structures")
     document.getElementById("contents").setAttribute("src", "./datastructPage.html")
 }
+
+document.getElementById("snake-2d").onclick = (e) => {
+    console.log("snake-2d")
+    document.getElementById("contents").setAttribute("src", "./snake2dPage.html")
+}

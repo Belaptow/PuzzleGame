@@ -11,6 +11,11 @@ body {
     margin-right: auto;
 }
 
+#test {
+    visibility: hidden;
+    position: absolute;
+}
+
 .grid-cell-dead {
     width: 100%;
     height: 100%;

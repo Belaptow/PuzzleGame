@@ -44,6 +44,12 @@ const gameOfLifePlugin = new HtmlWebPackPlugin({
     chunks: ["gameOfLife"]
 })
 
+const snake2dPlugin = new HtmlWebPackPlugin({
+    template: "./src/app/components/snake2dComponent/snake2dPage.html",
+    filename: "./snake2dPage.html",
+    chunks: ["snake2d"]
+})
+
 const config = {
     target: "electron-renderer",
     devtool: "source-map",
@@ -54,7 +60,8 @@ const config = {
         calculator: "./src/app/components/calcComponent/calculator.jsx",
         timer: "./src/app/components/timerComponent/timer.jsx",
         datastruct: "./src/app/components/dataStructuresComponent/datastruct.jsx",
-        gameOfLife: "./src/app/components/gameOfLifeComponent/gameOfLife.jsx"
+        gameOfLife: "./src/app/components/gameOfLifeComponent/gameOfLife.jsx",
+        snake2d: "./src/app/components/snake2dComponent/snake2d.jsx"
     },
     output: {
         filename: "[name].js",
@@ -86,7 +93,8 @@ const config = {
         calcPlugin,
         timerPlugin,
         datastructPlugin,
-        gameOfLifePlugin
+        gameOfLifePlugin,
+        snake2dPlugin
     ]
 };
 
